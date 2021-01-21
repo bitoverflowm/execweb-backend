@@ -1,5 +1,7 @@
 const express = require('express');
 
+const HttpError = require('../models/http-error');
+
 const router = express.Router();
 
 const DUMMY_EVENTS = [
@@ -58,6 +60,11 @@ router.get('/:eid', (req, res, next) => {
     const event = DUMMY_EVENTS.filter(e => {
         return e.id === eventId;
     });
+
+    if(!event){
+        throw new HttpError('Could not find event for the provided id.', 404);
+    }
+
     res.json({event: event});
 });
 
@@ -67,8 +74,9 @@ router.get('/user/:uid', (req, res, next) => {
     const events = DUMMY_EVENTS.filter(e => {
         return e.attendees.includes(userId);
     });
+
     res.json({events: events});
-})
+});
 
 
 module.exports = router;
