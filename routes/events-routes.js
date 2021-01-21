@@ -14,7 +14,7 @@ const DUMMY_EVENTS = [
         topic: 'Cybersecurity',
         host: 'Imam Farrhouk',
         sponsor: 'Kentucky Fried Chicken',
-        attendees: ['John Hamm', 'Michael Moore'],
+        attendees: ['1', '2'],
         event_details: 'description holder',        
     },
     {
@@ -28,7 +28,7 @@ const DUMMY_EVENTS = [
         topic: 'Cybersecurity',
         host: 'Imam Farrhouk',
         sponsor: 'Kentucky Fried Chicken',
-        attendees: ['John Hamm', 'Michael Moore'],
+        attendees: ['2'],
         event_details: 'description holder',        
     },
     {
@@ -42,25 +42,33 @@ const DUMMY_EVENTS = [
         topic: 'Cybersecurity',
         host: 'Imam Farrhouk',
         sponsor: 'Kentucky Fried Chicken',
-        attendees: ['John Hamm', 'Michael Moore'],
+        attendees: ['1'],
         event_details: 'description holder',        
     }
 ];
 
 router.get('/', (req, res, next) => {
-    console.log('GET Request in events');
+    console.log('GET all events');
     res.json({message: "Getting all events"});
 });
 
 router.get('/:eid', (req, res, next) => {
-    console.log('GET Request in events');
     const eventId = req.params.eid;
-    const event = DUMMY_EVENTS.find(e => {
+    console.log('GET event by event ID', eventId);
+    const event = DUMMY_EVENTS.filter(e => {
         return e.id === eventId;
     });
-
     res.json({event: event});
 });
+
+router.get('/user/:uid', (req, res, next) => {
+    const userId = req.params.uid;
+    console.log('GET event by user ID', userId);
+    const events = DUMMY_EVENTS.filter(e => {
+        return e.attendees.includes(userId);
+    });
+    res.json({events: events});
+})
 
 
 module.exports = router;
