@@ -1,0 +1,11 @@
+{
+  "name": "execweb-backend",
+  "version": "1.0.0",
+  "description": "MVP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rikesh Thapa @misterrpink1",
+  "license": "ISC"
+}
