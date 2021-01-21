@@ -5,6 +5,6 @@ const eventRoutes = require('./routes/events-routes');
 
 const app = express();
 
-app.use(eventRoutes);
+app.use('/api/events', eventRoutes);
 
 app.listen(5000);
