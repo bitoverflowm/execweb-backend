@@ -20,7 +20,23 @@ const DUMMY_SPONSORS = [
     }
 ];
 
+const DUMMY_USER_SEARCH = [
+    {
+        titles : ['Chief Information Officer'],
+        industry : ['Financial Services'],
+        employtees : '50',
+        regions : ['west', 'south-west']
+    }
+]
 
+const DUMMY_USER_DATA = [
+    {
+        id: 'u1',
+        name: 'Hamid',
+        last_name: 'Karimi',
+        
+    }
+]
 
 
 
