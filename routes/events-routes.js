@@ -51,7 +51,8 @@ const DUMMY_EVENTS = [
 
 router.get('/', (req, res, next) => {
     console.log('GET all events');
-    res.json({message: "Getting all events"});
+    res.json({events:DUMMY_EVENTS, 
+            message: "Getting all events"});
 });
 
 router.get('/:eid', (req, res, next) => {
