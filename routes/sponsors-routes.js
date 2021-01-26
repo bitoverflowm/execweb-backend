@@ -61,6 +61,12 @@ router.get('/search', (req, res, next) => {
     res.json({users: result});
 });
 
+//submit Sponsor event creation request
+
+
+//get sponsorship requests 
+// enspoint to get list of all submissions made buy given user
+
 
 
 module.exports = router;
