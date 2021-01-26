@@ -32,11 +32,34 @@ const DUMMY_USER_SEARCH = [
 const DUMMY_USER_DATA = [
     {
         id: 'u1',
-        name: 'Hamid',
-        last_name: 'Karimi',
-        
+        first_name: 'name 1',
+        last_name: 'lname1',
+        position: 'VP Technology',
+    },
+    {
+        id: 'u2',
+        first_name: 'name 2',
+        last_name: 'lname2',
+        position: 'Chief Information Officer',
+    },
+    {
+        id: 'u3',
+        first_name: 'name 3',
+        last_name: 'lname3',
+        position: 'Chief Information Officer',
     }
-]
+];
+
+
+router.get('/search', (req, res, next) => {
+    const result = DUMMY_USER_DATA;
+    console.log('GET resommended users');
+    if(!result){
+        throw new HttpError('Could not find any matching users', 404);
+    }
+    
+    res.json({users: result});
+});
 
 
 
