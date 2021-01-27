@@ -6,15 +6,15 @@ const router = express.Router();
 
 const DUMMY_JOB_TITLE = [
     {
-        id: '1',
+        id: 'j1',
         title: 'Chief Information Officer'
     },
     {
-        id: '2',
+        id: 'j2',
         title: 'Chief Executive Officer'
     },
     {
-        id: '3',
+        id: 'j3',
         title: 'Chief Technology Officer'
     },
 ] 
@@ -23,5 +23,8 @@ router.get('/', (req, res, next) => {
     console.log('GET all job titles.');
     res.json({jobTitles: DUMMY_JOB_TITLE});
 })
+
+//add new job title
+
 
 module.exports = router;

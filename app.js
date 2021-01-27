@@ -10,6 +10,8 @@ const regions = require('./routes/regions-routes');
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use('/api/events', eventRoutes);
 
 app.use('/api/sponsors', sponsorRoutes);
