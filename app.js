@@ -9,6 +9,7 @@ const regions = require('./routes/regions-routes');
 
 
 const app = express();
+const HttpError = require('./models/http-error');
 
 app.use(bodyParser.json());
 
@@ -21,6 +22,11 @@ app.use('/api/jobTitles', jobTitles);
 app.use('/api/industry', industries);
 
 app.use('/api/regions', regions);
+
+app.use((req, res, next) => {
+    const error = new HttpError('Could not find this route.', 404);
+    throw error;
+});
 
 app.use((error, req, res, next) => {
     if (res.headerSent){

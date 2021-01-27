@@ -1,5 +1,5 @@
 //external
-const { uuid } = require('uuidv4');
+const { v4:uuid } = require('uuid');
 
 const HttpError = require('../models/http-error');
 
@@ -95,7 +95,6 @@ const getSponsorSubmissions = (req, res, next) => {
 }
 
 const submitSponsorRequest = (req, res, next) => {
-    console.log(req.body);
     const { 
         jobTitles, industry, clientList, employeeCount, users, dateStart, dateEnd, topic, host } = req.body;
     
@@ -111,6 +110,8 @@ const submitSponsorRequest = (req, res, next) => {
         topic, 
         host
     };
+
+    console.log('POST Submit sponsor request ', sponsorRequestSubmission );
 
     DUMMY_SPONSOR_SUBMISSION.push(sponsorRequestSubmission);
     res.status(201).json({sponsorSubmission : sponsorRequestSubmission});
