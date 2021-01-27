@@ -1,4 +1,8 @@
+//external
+const { uuid } = require('uuidv4');
+
 const HttpError = require('../models/http-error');
+
 
 const DUMMY_SPONSORS = [
     {
@@ -48,7 +52,7 @@ const DUMMY_USER_DATA = [
 
 const DUMMY_SPONSOR_SUBMISSION = [
     {
-    'sId' : 's1',
+    'id' : 's1',
     't_job_titles' : ['j1', 'j2'],
     't_industry' : ['i1', 'i2'],
     't_client_list' : 'test.csv',
@@ -93,20 +97,19 @@ const getSponsorSubmissions = (req, res, next) => {
 const submitSponsorRequest = (req, res, next) => {
     console.log(req.body);
     const { 
-        sId,
+        jobTitles, industry, clientList, employeeCount, users, dateStart, dateEnd, topic, host } = req.body;
+    
+    const sponsorRequestSubmission = {
+        id: uuid(), 
         jobTitles, 
         industry, 
         clientList, 
         employeeCount, 
-        users,
-        dateStart, 
+        users, 
+        dateStart,
         dateEnd, 
         topic, 
-        host } = req.body;
-    
-    const sponsorRequestSubmission = {
-        sId, jobTitles, industry, clientList, employeeCount, users, dateStart,
-        dateEnd, topic, host
+        host
     };
 
     DUMMY_SPONSOR_SUBMISSION.push(sponsorRequestSubmission);
