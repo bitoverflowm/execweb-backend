@@ -17,7 +17,7 @@ const DUMMY_JOB_TITLE = [
         id: 'j3',
         title: 'Chief Technology Officer'
     },
-] 
+]; 
 
 router.get('/', (req, res, next) => {
     console.log('GET all job titles.');

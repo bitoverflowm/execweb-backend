@@ -24,7 +24,7 @@ const DUMMY_USER_SEARCH = [
     {
         titles : ['Chief Information Officer'],
         industry : ['Financial Services'],
-        employtees : '50',
+        employees : '50',
         regions : ['west', 'south-west']
     }
 ];

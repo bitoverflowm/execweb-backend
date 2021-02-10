@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const eventRoutes = require('./routes/events-routes');
@@ -10,6 +11,7 @@ const regions = require('./routes/regions-routes');
 
 const app = express();
 const HttpError = require('./models/http-error');
+const { Mongoose } = require('mongoose');
 
 app.use(bodyParser.json());
 
@@ -35,4 +37,12 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500).json({ message: error.message || 'An unknown error occurred!'});
 });
 
-app.listen(5000);
+mongoose
+    .connect('mongodb+srv://test1:hello123@cluster0.u3lfs.mongodb.net/execweb?retryWrites=true&w=majority')
+    .then(() => {
+        app.listen(5000);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
