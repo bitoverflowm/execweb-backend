@@ -95,6 +95,13 @@ const getSponsorSubmissions = (req, res, next) => {
     res.status(200).json({filteredUsers: result});
 }
 
+
+// Sponsor Signup
+// linkedin validation logic
+
+
+// Create Sponsor Request
+
 const createSponsorRequest = async (req, res, next) => {
     const { 
         jobTitles, industries, clientList, headCounts, regions, users, dateStart, dateEnd, topic, host, sponsor } = req.body;
