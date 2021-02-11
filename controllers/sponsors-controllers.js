@@ -76,7 +76,7 @@ const getUsersBySearch = async (req, res, next) => {
 
     try {
         targetUsers = await TargetUsers.find();
-        console.log(targetUsers);
+        console.log('Pulling all usesrs:', targetUsers)
     } catch (err) {
         const error = new HttpError(
             'Something when wrong, could not find any targetUsers.', 500
@@ -108,14 +108,15 @@ const getUsersBySearch = async (req, res, next) => {
     }
 
     const { jobTitles, industries } = req.body;
-    
-    console.log(jobTitles, industries);
     const searchQuery = jobTitles.join(' ') + industries.join(' ');
+    console.log('searching with filters: ', searchQuery);
 
     let filteredUsers;
 
     try{
         filteredUsers = await fuse.search(searchQuery);
+        console.log(filteredUsers);
+        console.log("Search completed")
     } catch (err) {
         const error = new HttpError(
             'Unable to conduct search operation.', 500

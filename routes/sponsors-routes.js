@@ -6,7 +6,7 @@ const sponsorsControllers = require('../controllers/sponsors-controllers');
 
 const router = express.Router();
 
-router.get('/userSearch', sponsorsControllers.getUsersBySearch);
+router.post('/userSearch', sponsorsControllers.getUsersBySearch);
 
 router.get('/:sId/sponsorSubmissions', sponsorsControllers.getSponsorSubmissions);
 
