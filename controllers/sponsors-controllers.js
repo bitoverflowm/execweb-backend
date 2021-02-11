@@ -2,6 +2,7 @@
 const { v4:uuid } = require('uuid');
 
 const HttpError = require('../models/http-error');
+const SponsorRequest = require('../models/sponsor-request');
 
 
 const DUMMY_SPONSORS = [
@@ -94,26 +95,36 @@ const getSponsorSubmissions = (req, res, next) => {
     res.status(200).json({filteredUsers: result});
 }
 
-const submitSponsorRequest = (req, res, next) => {
+const createSponsorRequest = async (req, res, next) => {
     const { 
-        jobTitles, industry, clientList, employeeCount, users, dateStart, dateEnd, topic, host } = req.body;
+        jobTitles, industries, clientList, headCounts, regions, users, dateStart, dateEnd, topic, host, sponsor } = req.body;
     
-    const sponsorRequestSubmission = {
-        id: uuid(), 
+    const sponsorRequestSubmission = new SponsorRequest({
         jobTitles, 
-        industry, 
+        industries, 
         clientList, 
-        employeeCount, 
+        headCounts,
+        regions, 
         users, 
         dateStart,
         dateEnd, 
         topic, 
-        host
-    };
+        host,
+        sponsor
+    });
 
     console.log('POST Submit sponsor request ', sponsorRequestSubmission );
 
-    DUMMY_SPONSOR_SUBMISSION.push(sponsorRequestSubmission);
+    try {
+        await sponsorRequestSubmission.save();
+    } catch (err) {
+        const error = new HttpError(
+            'Creating sponsor request failed, please try again.',
+            500
+        );
+        return next(error);
+    }
+
     res.status(201).json({sponsorSubmission : sponsorRequestSubmission});
 };
 
@@ -122,4 +133,4 @@ const submitSponsorRequest = (req, res, next) => {
 
 exports.getUsersBySearch = getUsersBySearch;
 exports.getSponsorSubmissions = getSponsorSubmissions;
-exports.submitSponsorRequest = submitSponsorRequest;
+exports.createSponsorRequest = createSponsorRequest;

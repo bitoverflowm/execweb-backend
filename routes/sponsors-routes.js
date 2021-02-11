@@ -11,7 +11,7 @@ router.get('/userSearch', sponsorsControllers.getUsersBySearch);
 router.get('/:sId/sponsorSubmissions', sponsorsControllers.getSponsorSubmissions);
 
 //submit Sponsor event creation request
-router.post('/sponsorRequest', sponsorsControllers.submitSponsorRequest);
+router.post('/sponsorRequest', sponsorsControllers.createSponsorRequest);
 
 //get sponsorship requests 
 // endpoint to get list of all submissions made buy given user
