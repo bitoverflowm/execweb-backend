@@ -46,8 +46,15 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500).json({ message: error.message || 'An unknown error occurred!'});
 });
 
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+}
+
 mongoose
-    .connect('mongodb+srv://test1:hello123@cluster0.u3lfs.mongodb.net/execweb?retryWrites=true&w=majority')
+    .connect('mongodb+srv://test1:hello123@cluster0.u3lfs.mongodb.net/execweb?retryWrites=true&w=majority', options)
     .then(() => {
         app.listen(5000);
     })

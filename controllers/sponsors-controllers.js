@@ -1,8 +1,10 @@
 //external
 const { v4:uuid } = require('uuid');
+const Fuse = require('fuse.js');
 
 const HttpError = require('../models/http-error');
 const SponsorRequest = require('../models/sponsor-request');
+const TargetUsers = require('../models/target-user')
 
 
 const DUMMY_SPONSORS = [
@@ -68,16 +70,60 @@ const DUMMY_SPONSOR_SUBMISSION = [
 
 
 //get all users based on search queries
-//TODO: Implement search in database. Add fuzzy logic to improve filtering 
-const getUsersBySearch = (req, res, next) => {
-    const result = DUMMY_USER_DATA;
-    console.log('GET recommended users based on specified filters');
+const getUsersBySearch = async (req, res, next) => {
 
-    if(!result){
-        throw new HttpError('Could not find any matching users', 404);
+    let targetUsers;
+
+    try {
+        targetUsers = await TargetUsers.find();
+        console.log(targetUsers);
+    } catch (err) {
+        const error = new HttpError(
+            'Something when wrong, could not find any targetUsers.', 500
+        );
+        return next(error);
     }
+
+    if(!targetUsers){
+        const error =  new HttpError('Could not find any matching users', 404);
+        return next(error);
+    }
+
+    //Lets start the filter
+    const options = {
+        //note: regions is eliminated from search
+        keys: ["Position", "Industry"]
+    }
+
+    let fuse;
+
+    try{
+        //fuse = await new Fuse(targetUsers.toObject({getters: true}), options);
+        fuse = await new Fuse(targetUsers, options);
+    } catch (err) {
+        const error = new HttpError(
+            'Unable to format search user data.', 500
+        );
+        return next(error);
+    }
+
+    const { jobTitles, industries } = req.body;
     
-    res.json({filteredUsers: result});
+    console.log(jobTitles, industries);
+    const searchQuery = jobTitles.join(' ') + industries.join(' ');
+
+    let filteredUsers;
+
+    try{
+        filteredUsers = await fuse.search(searchQuery);
+    } catch (err) {
+        const error = new HttpError(
+            'Unable to conduct search operation.', 500
+        );
+        return next(error);
+    }
+
+    res.json({filteredUsers: filteredUsers});
 };
 
 //GET all sponsorSubmissions based on SponsorID
