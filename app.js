@@ -54,7 +54,7 @@ const options = {
 }
 
 mongoose
-    .connect('mongodb+srv://test1:hello123@cluster0.u3lfs.mongodb.net/execweb?retryWrites=true&w=majority', options)
+    .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.u3lfs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, options)
     .then(() => {
         app.listen(5000);
     })
