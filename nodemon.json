@@ -1,0 +1,9 @@
+{
+    "env": {
+        "DB_USER": "test1",
+        "DB_PASSWORD": "hello123",
+        "DB_NAME": "execweb",
+        "LINKEDIN_API_KEY": "...",
+        "JWT_KEY": "..."
+    }
+}
