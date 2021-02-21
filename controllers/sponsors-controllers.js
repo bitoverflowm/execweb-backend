@@ -114,7 +114,7 @@ const getUsersBySearch = async (req, res, next) => {
     let filteredUsers;
 
     try{
-        filteredUsers = await fuse.search(searchQuery);
+        filteredUsers = await fuse.search(searchQuery, {limit: 100});
         console.log(filteredUsers);
         console.log("Search completed")
     } catch (err) {
