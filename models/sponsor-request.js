@@ -26,7 +26,7 @@ const sponsorRequestSchema = new Schema({
     regions: { type: Array, "default": [] }, 
     users: { type: Array, "default": [] }, 
     dates: { type: Array, required: true},
-    topic: { type: Boolean, "default": 0}, 
+    topic: { type: String, "default": 0}, 
     host: { type: Boolean, "default": 0},
     sponsor: { type: String, required: false}
 });
