@@ -25,11 +25,10 @@ const sponsorRequestSchema = new Schema({
     headCounts: { type: Array, "default": [] },
     regions: { type: Array, "default": [] }, 
     users: { type: Array, "default": [] }, 
-    dateStart: { type: String, required: true},
-    dateEnd: { type: String, required: true},  
+    dates: { type: Array, required: true},
     topic: { type: Boolean, "default": 0}, 
     host: { type: Boolean, "default": 0},
-    sponsor: { type: Number, required: true}
+    sponsor: { type: String, required: false}
 });
 
 module.exports = mongoose.model('SponsorRequest', sponsorRequestSchema);

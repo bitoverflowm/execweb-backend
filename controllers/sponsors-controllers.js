@@ -151,7 +151,7 @@ const getSponsorSubmissions = (req, res, next) => {
 
 const createSponsorRequest = async (req, res, next) => {
     const { 
-        jobTitles, industries, clientList, headCounts, regions, users, dateStart, dateEnd, topic, host, sponsor } = req.body;
+        jobTitles, industries, clientList, headCounts, regions, users, dates, topic, host, sponsor } = req.body;
     
     const sponsorRequestSubmission = new SponsorRequest({
         jobTitles, 
@@ -160,8 +160,7 @@ const createSponsorRequest = async (req, res, next) => {
         headCounts,
         regions, 
         users, 
-        dateStart,
-        dateEnd, 
+        dates, 
         topic, 
         host,
         sponsor
