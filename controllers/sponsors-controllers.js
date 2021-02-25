@@ -105,9 +105,15 @@ const getUsersBySearch = async (req, res, next) => {
     }
 
     try{
+        if (filteredUsers.length === 0) {
+            filteredUsers = targetUsers;
+        }
         const fuse_industry = await new Fuse(filteredUsers, {keys: ["item.Industry"]});
         newFilteredUsers = await fuse_industry.search(industrySearchQuery);
-        console.log('Searching industries', newFilteredUsers);
+        if (newFilteredUsers.length === 0){
+            const fuse_formatting = await new Fuse(filteredUsers, {keys: ["item.Position"]});
+            newFilteredUsers = await fuse_formatting.search(jobTitleSearchQuery);
+        }
     } catch (err) {
         const error = new HttpError(
             'Unable to conduct search operation.', 500
