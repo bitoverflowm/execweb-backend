@@ -25,7 +25,7 @@ const targetUsersSchema = new Schema({
     Company : { type: String, required: false},
     "# of Employees" : { type: String, required: false},
     "Estimated Revenues" : { type: String, required: false},
-    industry: { type: String, required: false},
+    Industry: { type: String, required: false},
     "Personal Photo": { type: String, required: false},
     "LinkedIn URL": { type: String, required: false}
 });

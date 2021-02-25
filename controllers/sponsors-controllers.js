@@ -73,10 +73,13 @@ const DUMMY_SPONSOR_SUBMISSION = [
 const getUsersBySearch = async (req, res, next) => {
 
     let targetUsers;
+    const { jobTitles, industries } = req.body;
+    const jobTitleSearchQuery = jobTitles.join(' ');
+    const industrySearchQuery = industries.join(' ');
 
+    //pulling all users from db
     try {
         targetUsers = await TargetUsers.find();
-        console.log('Pulling all usesrs:', targetUsers)
     } catch (err) {
         const error = new HttpError(
             'Something when wrong, could not find any targetUsers.', 500
@@ -89,17 +92,11 @@ const getUsersBySearch = async (req, res, next) => {
         return next(error);
     }
 
-    //Lets start the filter
-    const options = {
-        //note: regions is eliminated from search
-        keys: ["Position", "Industry"]
-    }
-
-    let fuse;
+    let filteredUsers;
 
     try{
-        //fuse = await new Fuse(targetUsers.toObject({getters: true}), options);
-        fuse = await new Fuse(targetUsers, options);
+        const fuse_job_title = await new Fuse(targetUsers, {keys: ["Position"]});
+        filteredUsers = await fuse_job_title.search(jobTitleSearchQuery);
     } catch (err) {
         const error = new HttpError(
             'Unable to format search user data.', 500
@@ -107,16 +104,10 @@ const getUsersBySearch = async (req, res, next) => {
         return next(error);
     }
 
-    const { jobTitles, industries } = req.body;
-    const searchQuery = jobTitles.join(' ') + industries.join(' ');
-    console.log('searching with filters: ', searchQuery);
-
-    let filteredUsers;
-
     try{
-        filteredUsers = await fuse.search(searchQuery, {limit: 100});
-        console.log(filteredUsers);
-        console.log("Search completed")
+        const fuse_industry = await new Fuse(filteredUsers, {keys: ["item.Industry"]});
+        newFilteredUsers = await fuse_industry.search(industrySearchQuery);
+        console.log('Searching industries', newFilteredUsers);
     } catch (err) {
         const error = new HttpError(
             'Unable to conduct search operation.', 500
@@ -124,7 +115,7 @@ const getUsersBySearch = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({filteredUsers: filteredUsers});
+    res.json({filteredUsers: newFilteredUsers});
 };
 
 //GET all sponsorSubmissions based on SponsorID
