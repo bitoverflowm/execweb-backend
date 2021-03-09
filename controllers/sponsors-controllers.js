@@ -73,13 +73,23 @@ const DUMMY_SPONSOR_SUBMISSION = [
 const getUsersBySearch = async (req, res, next) => {
 
     let targetUsers;
-    const { jobTitles, industries } = req.body;
+    const { jobTitles, industries, headCounts } = req.body;
     const jobTitleSearchQuery = jobTitles.join(' ');
     const industrySearchQuery = industries.join(' ');
 
-    //pulling all users from db
+    let headCountQuery = [].concat(...headCounts)
+    console.log(headCountQuery);
+    let sortedHeadCount = headCountQuery.sort();
+    const minHeadCount = sortedHeadCount[0];
+    const maxHeadCount = sortedHeadCount[sortedHeadCount.length -1];
+
+
+
+    //pulling all users from db filtered by headcount
     try {
-        targetUsers = await TargetUsers.find();
+        let returnedtUsers = await TargetUsers.find();
+        targetUsers = returnedtUsers.filter(returnedtUsers => Number(returnedtUsers['# of Employees']) >= minHeadCount && Number(returnedtUsers['# of Employees']) <= maxHeadCount);
+        console.log()
     } catch (err) {
         const error = new HttpError(
             'Something when wrong, could not find any targetUsers.', 500
