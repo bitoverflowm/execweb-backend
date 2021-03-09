@@ -78,7 +78,6 @@ const getUsersBySearch = async (req, res, next) => {
     const industrySearchQuery = industries.join(' ');
 
     let headCountQuery = [].concat(...headCounts)
-    console.log(headCountQuery);
     let sortedHeadCount = headCountQuery.sort();
     const minHeadCount = sortedHeadCount[0];
     const maxHeadCount = sortedHeadCount[sortedHeadCount.length -1];
@@ -89,7 +88,6 @@ const getUsersBySearch = async (req, res, next) => {
     try {
         let returnedtUsers = await TargetUsers.find();
         targetUsers = returnedtUsers.filter(returnedtUsers => Number(returnedtUsers['# of Employees']) >= minHeadCount && Number(returnedtUsers['# of Employees']) <= maxHeadCount);
-        console.log()
     } catch (err) {
         const error = new HttpError(
             'Something when wrong, could not find any targetUsers.', 500
